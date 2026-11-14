@@ -42,7 +42,7 @@ The application was developed according to the requirements of the IU Habit Trac
 
 The implementation includes:
 
-- Python 3.7 or later
+- Python 3.8 or later
 - A `Habit` class using Object-Oriented Programming
 - Daily habits
 - Weekly habits
@@ -331,6 +331,37 @@ This provides:
 
 ---
 
+# 🚀 First Run Behaviour
+
+When the application is started for the first time, the SQLite database does not yet exist.
+
+The application detects this situation and automatically loads:
+
+- the five predefined habits
+- four weeks of example completion data
+
+The first-run flow is:
+
+```text
+Application starts
+        ↓
+Database does not exist
+        ↓
+Database is created
+        ↓
+Five predefined habits are loaded
+        ↓
+Four weeks of fixture data are inserted
+        ↓
+Main menu is displayed
+```
+
+On later runs, the existing database is reused.
+
+This means that user changes are preserved and the predefined habits are not automatically recreated every time the program starts.
+
+---
+
 # 📅 Four Weeks of Example Tracking Data
 
 The predefined habits include deterministic sample completion data covering a four-week period.
@@ -400,13 +431,18 @@ This behaviour is verified automatically by the test suite.
 
 The project requires:
 
-- Python 3.7 or later
+- Python 3.8 or later
 - `pip`
 - `pytest`
 
-The project was developed and tested using Python 3.11.
+The project was developed and tested using:
 
-SQLite is part of the Python standard library and does not require a separate installation.
+```text
+Python 3.11
+pytest 9.2
+```
+
+SQLite is included in Python's standard library and does not require a separate installation.
 
 ---
 
@@ -556,7 +592,7 @@ Select:
 2. View habits
 ```
 
-Example:
+On a new installation, the predefined habits are initially available:
 
 ```text
 Current habits:
@@ -654,3 +690,344 @@ monthly
 ```
 
 ---
+
+## Longest Streak Overall
+
+The application calculates the longest streak among all currently tracked habits.
+
+The result identifies:
+
+- the habit
+- the longest number of consecutive periods
+
+---
+
+## Longest Streak for a Habit
+
+The user can select a specific habit and calculate its longest historical streak.
+
+Example:
+
+```text
+Longest streak for Exercise:
+4 consecutive period(s)
+```
+
+---
+
+# 🕒 6. View Completion History
+
+Select:
+
+```text
+6. View completions
+```
+
+Example:
+
+```text
+Completion history:
+
+Habit ID: 1 | Completed: 2026-10-01 18:00:00
+Habit ID: 1 | Completed: 2026-10-02 18:00:00
+Habit ID: 1 | Completed: 2026-10-03 18:00:00
+```
+
+The completion history demonstrates that completion dates and times are stored persistently.
+
+---
+
+# 🧪 Automated Testing
+
+The project uses **pytest** for automated testing.
+
+The test suite covers the critical application components.
+
+| Area            | Tested functionality                                            |
+| --------------- | --------------------------------------------------------------- |
+| Habit           | creation, validation, periodicity and timestamps                |
+| DatabaseManager | saving, loading, deleting and persistence                       |
+| HabitManager    | creation, completion, retrieval and deletion                    |
+| Analytics       | filtering and streak calculations                               |
+| Edge cases      | no completions, broken streaks and duplicate-period completions |
+| Fixtures        | five predefined habits                                          |
+| Fixtures        | daily and weekly requirements                                   |
+| Fixtures        | four-week fixture period                                        |
+| Fixtures        | duplicate prevention                                            |
+
+---
+
+# 📅 Fixture Requirement Tests
+
+The fixture tests explicitly verify that:
+
+```text
+✓ Exactly 5 predefined habits exist
+
+✓ Daily habits are included
+
+✓ Weekly habits are included
+
+✓ Every predefined habit has completion data
+
+✓ Fixture completion data belongs to the
+  four-week example period
+
+✓ Loading the fixture multiple times
+  does not create duplicate records
+```
+
+---
+
+# 🗄️ Database Isolation During Testing
+
+Database tests use temporary SQLite databases.
+
+Example:
+
+```python
+database_file = tmp_path / "test_habit_tracker.db"
+```
+
+This ensures that automated testing does not modify:
+
+```text
+data/habit_tracker.db
+```
+
+This makes the tests:
+
+- repeatable
+- isolated
+- predictable
+
+---
+
+# ▶️ Running the Tests
+
+Run the complete test suite:
+
+```bash
+py -m pytest -v
+```
+
+Current verified result:
+
+```text
+27 passed
+```
+
+Individual modules can also be executed.
+
+Example:
+
+```bash
+py -m pytest tests/test_habit.py -v
+```
+
+```bash
+py -m pytest tests/test_database.py -v
+```
+
+```bash
+py -m pytest tests/test_analytics.py -v
+```
+
+```bash
+py -m pytest tests/test_fixtures.py -v
+```
+
+---
+
+# 🛡️ Input Validation
+
+The application validates common invalid inputs.
+
+Examples include:
+
+- Empty habit names
+- Unsupported periodicities
+- Invalid menu selections
+- Non-numeric habit IDs
+- Unknown habit IDs
+
+This prevents common user-input errors from unnecessarily terminating the application.
+
+---
+
+# 📝 Python Documentation
+
+The application source code is documented using Python docstrings.
+
+Docstrings are used in:
+
+- `Habit`
+- `HabitManager`
+- `DatabaseManager`
+- analytics functions
+- fixture functions
+- CLI functions
+
+Example:
+
+```python
+def save_habit(self, habit):
+    """
+    Save a Habit object to the database.
+    """
+```
+
+Another example:
+
+```python
+def analyze_habits(manager):
+    """
+    Display the analytics menu and process analysis requests.
+    """
+```
+
+The docstrings complement the README and make the source code easier to understand and maintain.
+
+---
+
+# 🧰 Technologies Used
+
+| Technology     | Purpose                   |
+| -------------- | ------------------------- |
+| 🐍 Python 3.11 | Main programming language |
+| 🗄️ SQLite      | Persistent storage        |
+| 🧪 pytest      | Automated testing         |
+| 🌳 Git         | Version control           |
+| 🌐 GitHub      | Repository hosting        |
+| 💻 VS Code     | Development environment   |
+
+The application mainly uses Python's standard library, keeping external dependencies minimal.
+
+---
+
+# 🔄 Typical Application Flow
+
+```text
+User
+  ↓
+CLI
+  ↓
+HabitManager
+  ↓
+Habit / DatabaseManager
+  ↓
+SQLite
+```
+
+Analytics flow:
+
+```text
+User
+  ↓
+CLI
+  ↓
+HabitManager
+  ↓
+Habit + Completion Data
+  ↓
+Analytics
+  ↓
+Result
+  ↓
+CLI
+```
+
+---
+
+# 🌟 Additional Functionality
+
+The IU project requires support for daily and weekly habits.
+
+This implementation additionally supports:
+
+```text
+monthly
+```
+
+Monthly habits use the same general architecture as daily and weekly habits.
+
+The monthly streak calculation is also covered by automated tests.
+
+This functionality is an extension and does not replace the required daily and weekly predefined habits.
+
+---
+
+# ✅ Project Status
+
+The current implementation includes:
+
+- ✅ Object-oriented Habit model
+- ✅ Daily habits
+- ✅ Weekly habits
+- ✅ Monthly habit support
+- ✅ Five predefined habits
+- ✅ Automatic first-run fixture loading
+- ✅ Four weeks of sample tracking data
+- ✅ Habit creation
+- ✅ Habit deletion
+- ✅ Habit completion
+- ✅ Creation timestamps
+- ✅ Completion timestamps
+- ✅ SQLite persistence
+- ✅ Functional analytics
+- ✅ Periodicity filtering
+- ✅ Longest streak for one habit
+- ✅ Longest streak across all habits
+- ✅ Deterministic fixtures
+- ✅ Idempotent fixture loading
+- ✅ Command-line interface
+- ✅ Automated pytest suite
+- ✅ Temporary test databases
+- ✅ Python docstrings
+- ✅ Git version control
+- ✅ GitHub repository
+- ✅ 27 automated tests passing
+
+---
+
+# 🎓 Academic Context
+
+This application was developed as part of the IU portfolio assignment for:
+
+**Object-Oriented and Functional Programming with Python**
+
+The project demonstrates the practical application of:
+
+- Object-Oriented Programming
+- Functional Programming
+- Persistent data storage
+- Modular software architecture
+- Automated testing
+- Software documentation
+- Version control
+
+The application follows the technical architecture defined during the conception phase, with refinements made during implementation to improve correctness, usability and testability.
+
+The focus of the project is on:
+
+- correctness
+- maintainability
+- modularity
+- testability
+- clear separation of responsibilities
+
+rather than graphical user-interface complexity.
+
+---
+
+# 📄 Academic Use
+
+This repository represents an academic portfolio project.
+
+The code and documentation are intended primarily for educational and assessment purposes.
+
+---
+
+## 🌐 Repository
+
+https://github.com/lopillo/habit-tracker-iu

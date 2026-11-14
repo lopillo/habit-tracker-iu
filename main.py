@@ -1,5 +1,8 @@
+from pathlib import Path
+
 from database import DatabaseManager
 from habit_manager import HabitManager
+from fixtures import create_sample_data
 from analytics import (
     get_all_habits,
     get_habits_by_periodicity,
@@ -7,8 +10,10 @@ from analytics import (
     get_longest_streak_for_habit,
 )
 
-
 def show_menu():
+    """
+    Display the main application menu.
+"""
     print("\n" + "=" * 35)
     print("          HABIT TRACKER")
     print("=" * 35)
@@ -22,6 +27,15 @@ def show_menu():
 
 
 def create_habit(manager):
+    """
+    Create a new habit from user input.
+
+    The user provides a habit name and selects a supported
+    periodicity. The habit is then created through HabitManager.
+
+    Args:
+        manager: HabitManager instance used to create the habit.
+    """
     name = input("Enter habit name: ").strip()
 
     print("\nChoose periodicity:")
@@ -56,6 +70,13 @@ def create_habit(manager):
 
 
 def view_habits(manager):
+    """
+    Display all currently stored habits.
+
+    Args:
+        manager: HabitManager instance used to retrieve habits.
+    """
+
     habits = manager.get_habits()
 
     if not habits:
@@ -73,6 +94,16 @@ def view_habits(manager):
 
 
 def complete_habit(manager):
+    """
+    Mark an existing habit as completed.
+
+    The user selects a habit by its ID. The current date and time
+    are stored as the completion timestamp.
+
+    Args:
+        manager: HabitManager instance used to complete the habit.
+    """
+
     habits = manager.get_habits()
 
     if not habits:
@@ -101,6 +132,17 @@ def complete_habit(manager):
 
 
 def delete_habit(manager):
+
+    """
+    Delete an existing habit selected by the user.
+
+    The related completion records are also removed through the
+    persistence layer.
+
+    Args:
+        manager: HabitManager instance used to delete the habit.
+    """
+
     habits = manager.get_habits()
 
     if not habits:
@@ -129,6 +171,13 @@ def delete_habit(manager):
 
 
 def view_completions(manager):
+    """
+    Display the stored completion history.
+
+    Args:
+        manager: HabitManager instance used to retrieve completions.
+    """
+
     completions = manager.get_completions()
 
     if not completions:
@@ -145,8 +194,26 @@ def view_completions(manager):
 
 
 def main():
-    database = DatabaseManager()
+
+    """
+    Start the Habit Tracker command-line application.
+
+    On the first application run, the five predefined habits and
+    their four weeks of example tracking data are loaded into the
+    database. On later runs, the existing database is reused.
+
+    The function then displays the main menu and processes user
+    selections until the user exits the application.
+    """
+    database_path = "data/habit_tracker.db"
+
+    first_run = not Path(database_path).exists()
+
+    database = DatabaseManager(database_path)
     manager = HabitManager(database)
+
+    if first_run:
+        create_sample_data(manager)
 
     
     while True:
@@ -181,6 +248,19 @@ def main():
 
 
 def analyze_habits(manager):
+
+    """
+    Display the analytics menu and process analysis requests.
+
+    Users can list habits, filter them by periodicity, view the
+    longest streak overall, or calculate the longest streak for
+    a selected habit.
+
+    Args:
+        manager: HabitManager instance used to retrieve habits
+            and completion data.
+    """
+     
     habits = manager.get_habits()
     completions = manager.get_completions()
 

@@ -1,4 +1,4 @@
-from datetime import timedelta
+from datetime import date, timedelta
 
 
 def get_all_habits(habits):
@@ -54,25 +54,17 @@ def _are_consecutive(previous, current, periodicity):
         current_year, current_week = current
 
         # Simple comparison through ISO week dates.
-        previous_date = (
-            __import__("datetime")
-            .date
-            .fromisocalendar(
-                previous_year,
-                previous_week,
-                1
-            )
+        previous_date = date.fromisocalendar(
+            previous_year,
+            previous_week,
+            1
         )
 
-        current_date = (
-            __import__("datetime")
-            .date
-            .fromisocalendar(
-                current_year,
-                current_week,
-                1
+        current_date = date.fromisocalendar(
+            current_year,
+            current_week,
+            1
             )
-        )
 
         return current_date - previous_date == timedelta(weeks=1)
 
