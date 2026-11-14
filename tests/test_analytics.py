@@ -144,6 +144,28 @@ def test_no_completions_returns_zero():
     assert result == 0
 
 
+def test_single_completion_returns_one():
+    habit = Habit(
+        "Exercise",
+        "daily",
+        habit_id=1
+    )
+
+    completions = [
+        {
+            "habit_id": 1,
+            "completed_at": datetime(2026, 10, 1)
+        }
+    ]
+
+    result = get_longest_streak_for_habit(
+        habit,
+        completions
+    )
+
+    assert result == 1
+
+
 def test_duplicate_completion_same_day_counts_once():
     habit = Habit(
         "Exercise",

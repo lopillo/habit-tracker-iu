@@ -1,5 +1,9 @@
 from datetime import datetime, timedelta
 
+from analytics import (
+    get_longest_streak,
+    get_longest_streak_for_habit,
+)
 from database import DatabaseManager
 from habit_manager import HabitManager
 from fixtures import create_sample_data, PREDEFINED_HABITS
@@ -104,3 +108,40 @@ def test_fixture_data_covers_four_week_period(tmp_path):
 
         assert min(completion_dates) >= period_start
         assert max(completion_dates) <= period_end
+
+
+def test_fixture_data_supports_analytics(tmp_path):
+    """
+    Verify that the predefined fixture data can be used
+    directly by the analytics module.
+    """
+    database_file = tmp_path / "test_habit_tracker.db"
+
+    database = DatabaseManager(database_file)
+    manager = HabitManager(database)
+
+    create_sample_data(manager)
+
+    habits = manager.get_habits()
+    completions = manager.get_completions()
+
+    call_family = next(
+        habit
+        for habit in habits
+        if habit.name == "Call Family"
+    )
+
+    streak = get_longest_streak_for_habit(
+        call_family,
+        completions
+    )
+
+    assert streak == 4
+
+    habit, longest_streak = get_longest_streak(
+        habits,
+        completions
+    )
+
+    assert habit is not None
+    assert longest_streak > 0
