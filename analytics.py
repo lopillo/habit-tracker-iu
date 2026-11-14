@@ -64,7 +64,7 @@ def _are_consecutive(previous, current, periodicity):
             current_year,
             current_week,
             1
-            )
+        )
 
         return current_date - previous_date == timedelta(weeks=1)
 

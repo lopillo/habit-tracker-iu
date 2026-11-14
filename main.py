@@ -13,7 +13,7 @@ from analytics import (
 def show_menu():
     """
     Display the main application menu.
-"""
+    """
     print("\n" + "=" * 35)
     print("          HABIT TRACKER")
     print("=" * 35)
