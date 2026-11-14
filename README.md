@@ -2,14 +2,22 @@
 
 A command-line **Habit Tracking Application** developed in Python as part of the IU course **Object-Oriented and Functional Programming with Python**.
 
-The project demonstrates the practical use of **object-oriented programming**, **functional programming**, **SQLite persistence**, automated testing with **pytest**, and a modular command-line application architecture.
+The project demonstrates the practical use of:
 
-Repository:  
+- 🧠 Object-Oriented Programming
+- λ Functional Programming
+- 🗄️ SQLite persistence
+- 🧪 Automated testing with pytest
+- 💻 Command-line interaction
+- 🌳 Git version control
+- 🌐 GitHub repository management
+
+**Repository:**  
 https://github.com/lopillo/habit-tracker-iu
 
 ---
 
-## 📌 Project Overview
+# 📌 Project Overview
 
 The Habit Tracker allows users to define habits that should be completed periodically and to record when those habits are completed.
 
@@ -22,73 +30,77 @@ Users can:
 - 📊 Analyse habit data
 - 🔥 Calculate habit streaks
 - 🕒 Store creation and completion timestamps
-- 💾 Keep data between application sessions
+- 💾 Persist data between application sessions
 
 The application is operated through a simple interactive command-line interface.
 
 ---
 
-## 🎯 Project Requirements
+# 🎯 Project Requirements
 
-The implementation was developed according to the main requirements of the IU Habit Tracker portfolio assignment.
+The application was developed according to the requirements of the IU Habit Tracker portfolio assignment.
 
-The project includes:
+The implementation includes:
 
 - Python 3.7 or later
-- A `Habit` class using object-oriented programming
-- Daily and weekly habit periodicities
+- A `Habit` class using Object-Oriented Programming
+- Daily habits
+- Weekly habits
 - Five predefined habits
-- Persistent storage between application sessions
+- Four weeks of example tracking data
 - Habit creation timestamps
 - Completion timestamps
-- Functional-programming-based analytics
-- A command-line interface
+- Persistent storage
+- Functional analytics
+- Command-line interface
 - Automated unit tests
 - Python docstrings
 - Installation and usage documentation
 
-The application additionally supports **monthly habits** as an extension beyond the minimum daily and weekly periodicities.
+The application additionally supports **monthly habits** as an extension beyond the required daily and weekly periodicities.
 
 ---
 
-## ✨ Main Features
+# ✨ Main Features
 
-### ➕ Habit Creation
+## ➕ Create Habits
 
-Users can create new habits by specifying:
+Users can create habits by specifying:
 
 - a habit name
 - a periodicity
 
 Supported periodicities are:
 
-| Periodicity | Description                               |
-| ----------- | ----------------------------------------- |
-| `daily`     | The habit should be completed every day   |
-| `weekly`    | The habit should be completed every week  |
-| `monthly`   | The habit should be completed every month |
+| Periodicity | Description                           |
+| ----------- | ------------------------------------- |
+| `daily`     | Habit should be completed every day   |
+| `weekly`    | Habit should be completed every week  |
+| `monthly`   | Habit should be completed every month |
 
-Daily and weekly habits satisfy the required project periodicities. Monthly support was added as an additional feature.
+Daily and weekly habits satisfy the required project periodicities.
+
+Monthly support was implemented as additional functionality.
 
 ---
 
-## ✅ Habit Completion
+# ✅ Habit Completion
 
-A habit can be marked as completed at any time.
+Users can mark a habit as completed at any time.
 
 For every completion, the application stores:
 
-- the related habit ID
-- the exact completion date
-- the exact completion time
+- Habit ID
+- Completion date
+- Completion time
 
-These timestamps are used by the analytics module to calculate streaks.
+The completion timestamps are used by the analytics module to determine habit streaks.
 
 ---
 
-## 🔥 Streak Calculation
+# 🔥 Streak Calculation
 
-A streak represents the number of consecutive periods in which a habit has been completed successfully.
+A streak represents the number of consecutive periods in which a habit was completed successfully.
 
 Example for a daily habit:
 
@@ -100,34 +112,38 @@ Thursday    ✗
 Friday      ✓
 ```
 
-The longest streak in this example is:
+The longest streak is:
 
 ```text
 3 consecutive days
 ```
 
-The application evaluates streaks according to the habit periodicity:
+The application calculates streaks according to habit periodicity:
 
-- Daily habits → consecutive calendar days
-- Weekly habits → consecutive ISO weeks
-- Monthly habits → consecutive calendar months
+- Daily → consecutive calendar days
+- Weekly → consecutive ISO weeks
+- Monthly → consecutive calendar months
 
-If a habit is completed more than once during the same period, that period is counted only once for streak calculation.
+If a habit is completed more than once within the same period, that period is counted only once for streak calculation.
 
 ---
 
 # 📊 Analytics
 
-The analytics functionality is implemented in `analytics.py`.
+The analytics functionality is implemented in:
 
-The module provides the required functionality to:
+```text
+analytics.py
+```
+
+The analytics module provides functionality to:
 
 1. Return all currently tracked habits
 2. Return habits with the same periodicity
 3. Calculate the longest streak across all habits
 4. Calculate the longest streak for a selected habit
 
-The analytics layer follows a functional-programming approach and uses Python functionality such as:
+The module uses functional-programming techniques including:
 
 ```python
 filter()
@@ -137,7 +153,7 @@ sorted()
 max()
 ```
 
-The functions receive data, process it and return results without unnecessarily modifying the original habit objects.
+The analytics functions receive habit and completion data, process the data and return results without unnecessarily modifying the original objects.
 
 ---
 
@@ -154,18 +170,25 @@ periodicity
 created_at
 ```
 
-The class also validates that:
+The `Habit` class validates:
 
-- the habit name is not empty
-- the selected periodicity is supported
+- that the habit name is not empty
+- that the selected periodicity is supported
 
-Database access and analytics are intentionally separated from the `Habit` class to maintain a clear separation of responsibilities.
+Other responsibilities such as database access and analytics are intentionally separated from the `Habit` class.
+
+This improves:
+
+- maintainability
+- modularity
+- testability
+- separation of concerns
 
 ---
 
 # 🏗️ Application Architecture
 
-The project follows a modular architecture.
+The application follows a modular structure:
 
 ```text
                  ┌────────────────────┐
@@ -201,8 +224,6 @@ The project follows a modular architecture.
             🗄️ SQLite
 ```
 
-This separation makes the application easier to understand, maintain and test.
-
 ---
 
 # 📂 Project Structure
@@ -217,7 +238,7 @@ HabitTracker/
 │   └── Habit class and validation
 │
 ├── habit_manager.py
-│   └── Coordinates habit operations
+│   └── Coordinates application operations
 │
 ├── database.py
 │   └── SQLite persistence
@@ -226,7 +247,7 @@ HabitTracker/
 │   └── Functional analytics and streak calculations
 │
 ├── fixtures.py
-│   └── Predefined habits and deterministic sample data
+│   └── Five predefined habits and four weeks of sample data
 │
 ├── README.md
 │   └── Project documentation
@@ -242,9 +263,9 @@ HabitTracker/
     └── test_fixtures.py
 ```
 
-The local SQLite database file is excluded from Git using `.gitignore`.
+The SQLite runtime database is excluded from Git using `.gitignore`.
 
-This prevents personal runtime data from being published in the repository.
+This prevents local application data from being published in the GitHub repository.
 
 ---
 
@@ -258,26 +279,22 @@ The database contains two main tables.
 
 ## `habits`
 
-Stores the definition of each habit.
-
-| Field         | Purpose                  |
-| ------------- | ------------------------ |
-| `id`          | Unique habit identifier  |
-| `name`        | Habit name               |
-| `periodicity` | Daily, weekly or monthly |
-| `created_at`  | Habit creation timestamp |
+| Field         | Description                  |
+| ------------- | ---------------------------- |
+| `id`          | Unique habit identifier      |
+| `name`        | Habit name                   |
+| `periodicity` | Daily, weekly or monthly     |
+| `created_at`  | Habit creation date and time |
 
 ## `completions`
 
-Stores completed occurrences of habits.
-
-| Field          | Purpose                      |
+| Field          | Description                  |
 | -------------- | ---------------------------- |
 | `id`           | Unique completion identifier |
-| `habit_id`     | Related habit                |
-| `completed_at` | Completion timestamp         |
+| `habit_id`     | ID of the related habit      |
+| `completed_at` | Completion date and time     |
 
-The relationship can be represented as:
+The logical relationship is:
 
 ```text
 Habit
@@ -288,33 +305,92 @@ Habit
   └── ...
 ```
 
-Because the information is stored in SQLite, habits remain available after the application is closed and started again.
+Because the application uses persistent storage, habits remain available after the program is closed and restarted.
 
 ---
 
-# 🧪 Predefined Habits and Fixture Data
+# 🧪 Predefined Habits
 
-The project contains five predefined habits for demonstration and testing.
+The application contains five predefined habits.
 
-| Habit                | Periodicity |
-| -------------------- | ----------- |
-| 💧 Drink Water       | Daily       |
-| 🏃 Exercise          | Daily       |
-| 📚 Read 20 Minutes   | Daily       |
-| 📞 Call Family       | Weekly      |
-| 💳 Pay Monthly Bills | Monthly     |
+| Habit              | Periodicity |
+| ------------------ | ----------- |
+| 💧 Drink Water     | Daily       |
+| 🏃 Exercise        | Daily       |
+| 📚 Read 20 Minutes | Daily       |
+| 📞 Call Family     | Weekly      |
+| 🧹 Clean Apartment | Weekly      |
 
-The predefined data is implemented in:
+This provides:
+
+```text
+3 daily habits
+2 weekly habits
+5 predefined habits in total
+```
+
+---
+
+# 📅 Four Weeks of Example Tracking Data
+
+The predefined habits include deterministic sample completion data covering a four-week period.
+
+The fixture period is:
+
+```text
+1 October 2026
+        ↓
+28 October 2026
+```
+
+This corresponds to:
+
+```text
+28 days
+=
+4 weeks
+```
+
+The data deliberately contains both successful completions and missed periods.
+
+This allows the application to demonstrate:
+
+- successful streaks
+- broken streaks
+- daily streak calculations
+- weekly streak calculations
+- analytics across multiple habits
+
+The fixture data is implemented in:
 
 ```text
 fixtures.py
 ```
 
-The fixture module contains deterministic historical completion timestamps that allow the streak calculations and analytics functions to be tested against predictable data.
+---
+
+# 🔁 Idempotent Fixture Loading
 
 The fixture loader is designed to be **idempotent**.
 
-This means that executing the fixture-loading process repeatedly does not create duplicate predefined habits or identical fixture completion records.
+This means that loading the predefined data multiple times does not create:
+
+- duplicate habits
+- duplicate completion records
+
+For example:
+
+```text
+Load fixtures
+      ↓
+5 predefined habits
+
+Load fixtures again
+      ↓
+Still 5 predefined habits
+```
+
+This behaviour is verified automatically by the test suite.
 
 ---
 
@@ -322,27 +398,27 @@ This means that executing the fixture-loading process repeatedly does not create
 
 ## 1. Requirements
 
-The application requires:
+The project requires:
 
 - Python 3.7 or later
 - `pip`
-- `pytest` for running the automated tests
+- `pytest`
 
-The project was developed using Python 3.11.
+The project was developed and tested using Python 3.11.
 
-SQLite is included in Python's standard library and therefore does not require a separate installation.
+SQLite is part of the Python standard library and does not require a separate installation.
 
 ---
 
-## 2. Clone the Repository
+# 📥 Clone the Repository
 
-Open a terminal and run:
+Open a terminal and execute:
 
 ```bash
 git clone https://github.com/lopillo/habit-tracker-iu.git
 ```
 
-Enter the project directory:
+Then enter the project directory:
 
 ```bash
 cd habit-tracker-iu
@@ -350,29 +426,29 @@ cd habit-tracker-iu
 
 ---
 
-## 3. Create a Virtual Environment
+# 🐍 Create a Virtual Environment
 
-Creating a virtual environment is recommended.
+Using a virtual environment is recommended.
 
-### Windows
+## Windows
 
 ```bash
 py -m venv .venv
 ```
 
-### Activate in Git Bash
+Activate it in Git Bash:
 
 ```bash
 source .venv/Scripts/activate
 ```
 
-### Activate in Windows Command Prompt
+Or in Windows Command Prompt:
 
 ```cmd
 .venv\Scripts\activate
 ```
 
-### Linux / macOS
+## Linux / macOS
 
 ```bash
 python3 -m venv .venv
@@ -381,7 +457,7 @@ source .venv/bin/activate
 
 ---
 
-## 4. Install pytest
+# 📦 Install pytest
 
 With the virtual environment activated:
 
@@ -389,7 +465,7 @@ With the virtual environment activated:
 python -m pip install pytest
 ```
 
-On Windows, the Python launcher can also be used:
+On Windows:
 
 ```bash
 py -m pip install pytest
@@ -398,14 +474,14 @@ py -m pip install pytest
 Verify the installation:
 
 ```bash
-python -m pytest --version
+py -m pytest --version
 ```
 
 ---
 
 # ▶️ Running the Application
 
-From the root directory of the project:
+From the root directory:
 
 ```bash
 python main.py
@@ -417,7 +493,7 @@ On Windows:
 py main.py
 ```
 
-The main menu is displayed:
+The application displays:
 
 ```text
 ===================================
@@ -436,7 +512,7 @@ The main menu is displayed:
 
 # 🧑‍💻 Using the Application
 
-## ➕ 1. Create a Habit
+## ➕ 1. Create Habit
 
 Select:
 
@@ -444,16 +520,17 @@ Select:
 1. Create habit
 ```
 
-Enter the habit name:
+Enter a name:
 
 ```text
 Enter habit name: Exercise
 ```
 
-Select the periodicity:
+Select a periodicity:
 
 ```text
 Choose periodicity:
+
 1. Daily
 2. Weekly
 3. Monthly
@@ -467,11 +544,11 @@ Select an option: 1
 Habit created successfully: Exercise (daily)
 ```
 
-The new habit is stored in SQLite.
+The habit is stored in SQLite.
 
 ---
 
-## 📋 2. View Habits
+# 📋 2. View Habits
 
 Select:
 
@@ -484,16 +561,16 @@ Example:
 ```text
 Current habits:
 
-1. Exercise (daily)
-2. Drink Water (daily)
+1. Drink Water (daily)
+2. Exercise (daily)
 3. Read 20 Minutes (daily)
 4. Call Family (weekly)
-5. Pay Monthly Bills (monthly)
+5. Clean Apartment (weekly)
 ```
 
 ---
 
-## ✅ 3. Complete a Habit
+# ✅ 3. Complete Habit
 
 Select:
 
@@ -501,15 +578,15 @@ Select:
 3. Complete habit
 ```
 
-The application displays the available habits.
-
 Enter the ID of the habit:
 
 ```text
 Enter the ID of the habit to complete: 1
 ```
 
-The application stores the current completion timestamp.
+The application stores the current date and time.
+
+Example result:
 
 ```text
 Habit completed successfully.
@@ -517,7 +594,7 @@ Habit completed successfully.
 
 ---
 
-## 🗑️ 4. Delete a Habit
+# 🗑️ 4. Delete Habit
 
 Select:
 
@@ -525,15 +602,13 @@ Select:
 4. Delete habit
 ```
 
-Then enter the habit ID.
-
-Example:
+Enter the habit ID:
 
 ```text
 Enter the ID of the habit to delete: 3
 ```
 
-The habit and its related completion records are removed from the database.
+The selected habit and its associated completion records are removed from the database.
 
 ---
 
@@ -558,301 +633,24 @@ The analytics menu provides:
 5. Back to main menu
 ```
 
+---
+
 ## View All Habits
 
 Returns all currently tracked habits.
 
-## Filter by Periodicity
-
-Users can filter habits by:
-
-```text
-Daily
-Weekly
-Monthly
-```
-
-## Longest Streak Overall
-
-The program compares the streaks of all tracked habits and returns the habit with the longest streak.
-
-Example:
-
-```text
-Longest streak overall:
-Read 20 Minutes: 8 consecutive period(s)
-```
-
-## Longest Streak for a Habit
-
-The user selects one habit and the application calculates its longest historical streak.
-
-Example:
-
-```text
-Longest streak for Exercise:
-4 consecutive period(s)
-```
-
 ---
 
-# 🕒 6. View Completion History
+## Filter Habits by Periodicity
 
-Select:
+Habits can be filtered according to periodicity.
 
-```text
-6. View completions
-```
-
-Example:
+Examples:
 
 ```text
-Completion history:
-
-Habit ID: 1 | Completed: 2026-10-01 18:00:00
-Habit ID: 1 | Completed: 2026-10-02 18:00:00
-Habit ID: 1 | Completed: 2026-10-03 18:00:00
-```
-
-This history demonstrates that completion dates and times are stored persistently.
-
----
-
-# 🧪 Automated Testing
-
-Automated tests are implemented using **pytest**.
-
-The test suite covers the main components of the application.
-
-| Test Area         | Examples                                                        |
-| ----------------- | --------------------------------------------------------------- |
-| `Habit`           | creation, validation, periodicity and timestamps                |
-| `DatabaseManager` | saving, loading, deleting and persistence                       |
-| `HabitManager`    | creating, completing, retrieving and deleting habits            |
-| Analytics         | filtering and streak calculations                               |
-| Edge cases        | no completions, broken streaks and duplicate-period completions |
-| Fixtures          | prevention of duplicate fixture data                            |
-
-Database tests use temporary databases provided through pytest's `tmp_path` fixture.
-
-This prevents automated tests from modifying the normal application database.
-
----
-
-## ▶️ Running All Tests
-
-Run:
-
-```bash
-python -m pytest -v
-```
-
-On Windows:
-
-```bash
-py -m pytest -v
-```
-
-Current verified result:
-
-```text
-24 passed
-```
-
-Individual test modules can also be executed.
-
-Example:
-
-```bash
-py -m pytest tests/test_analytics.py -v
-```
-
-or:
-
-```bash
-py -m pytest tests/test_database.py -v
-```
-
----
-
-# 🗄️ Database Isolation During Testing
-
-The normal application database is located at:
-
-```text
-data/habit_tracker.db
-```
-
-Tests requiring database access use temporary databases.
-
-Example:
-
-```python
-database_file = tmp_path / "test_habit_tracker.db"
-```
-
-This provides two important advantages:
-
-- Tests do not change real user data
-- Tests remain repeatable
-
----
-
-# 🛡️ Input Validation
-
-The application contains validation for common invalid inputs.
-
-Examples include:
-
-- Empty habit names
-- Unsupported periodicities
-- Invalid menu selections
-- Non-numeric habit IDs
-- Habit IDs that do not exist
-
-Invalid input is handled without intentionally terminating the application.
-
----
-
-# 📝 Code Documentation
-
-Important classes and functions include Python docstrings describing their responsibilities.
-
-Example:
-
-```python
-def save_habit(self, habit):
-    """
-    Save a Habit object to the database.
-    """
-```
-
-The docstrings complement this README and make the source code easier to understand and maintain.
-
----
-
-# 🧰 Technologies Used
-
-| Technology | Purpose                   |
-| ---------- | ------------------------- |
-| 🐍 Python  | Main programming language |
-| 🗄️ SQLite  | Persistent storage        |
-| 🧪 pytest  | Automated testing         |
-| 🌳 Git     | Version control           |
-| 🌐 GitHub  | Repository hosting        |
-| 💻 VS Code | Development environment   |
-
-The core application mainly uses Python's standard library to keep the implementation lightweight.
-
----
-
-# 🔄 Typical Application Flow
-
-```text
-User
-  ↓
-CLI
-  ↓
-HabitManager
-  ↓
-Habit / Database
-  ↓
-SQLite
-```
-
-For analytics:
-
-```text
-User
-  ↓
-CLI
-  ↓
-HabitManager
-  ↓
-Habits + Completion Data
-  ↓
-Analytics
-  ↓
-Result
-  ↓
-CLI
-```
-
----
-
-# 🌟 Additional Functionality
-
-The project requirements specify daily and weekly habits as the required periodicities.
-
-This implementation additionally supports:
-
-```text
+daily
+weekly
 monthly
 ```
 
-The monthly periodicity uses the same architecture and streak-calculation logic as the required periodicities.
-
-This extension was implemented without changing the general modular structure of the application.
-
 ---
-
-# ✅ Current Project Status
-
-The current implementation includes:
-
-- ✅ Habit object model
-- ✅ Daily habits
-- ✅ Weekly habits
-- ✅ Monthly habits
-- ✅ Habit creation
-- ✅ Habit deletion
-- ✅ Habit completion
-- ✅ Habit creation timestamps
-- ✅ Completion timestamps
-- ✅ SQLite persistence
-- ✅ Functional analytics
-- ✅ Periodicity filtering
-- ✅ Individual longest streak calculation
-- ✅ Overall longest streak calculation
-- ✅ Five predefined habits
-- ✅ Deterministic fixture data
-- ✅ Idempotent fixture loading
-- ✅ Interactive CLI
-- ✅ Automated pytest suite
-- ✅ Temporary databases for database tests
-- ✅ Python docstrings
-- ✅ Git version control
-- ✅ GitHub repository
-
----
-
-# 🎓 Academic Context
-
-This application was developed as part of the IU portfolio project for:
-
-**Object-Oriented and Functional Programming with Python**
-
-The project follows the modular architecture defined during the conception phase and demonstrates the practical application of:
-
-- object-oriented programming
-- functional programming
-- persistent data storage
-- modular software architecture
-- automated testing
-- documentation
-- version control
-
-The focus of the project is on correct functionality, clear separation of responsibilities, maintainability and testability rather than graphical interface complexity.
-
----
-
-# 📄 Academic Use
-
-This repository represents an academic portfolio project.
-
-The code and documentation are intended primarily for educational and assessment purposes.
-
----
-
-**Repository:**  
-https://github.com/lopillo/habit-tracker-iu

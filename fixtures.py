@@ -19,11 +19,10 @@ PREDEFINED_HABITS = [
         "periodicity": "weekly",
     },
     {
-        "name": "Pay Monthly Bills",
-        "periodicity": "monthly",
+        "name": "Clean Apartment",
+        "periodicity": "weekly",
     },
 ]
-
 
 def create_sample_data(manager):
     """
@@ -80,7 +79,8 @@ def _get_or_create_habits(manager):
 
 def _build_completion_data(habits):
     """
-    Build deterministic sample completion data.
+    Build deterministic sample completion data covering
+    a full four-week period.
 
     The dates are fixed so that analytics and unit tests
     produce predictable results.
@@ -96,11 +96,19 @@ def _build_completion_data(habits):
     completion_data = []
 
     # Drink Water:
-    # longest daily streak = 5 days
-    for day in [
+    # Data distributed across the full 4-week period.
+    # Includes several streaks and missed days.
+    drink_water_days = [
         0, 1, 2, 3,
-        5, 6, 7, 8, 9
-    ]:
+        5, 6, 7,
+        9, 10, 11, 12,
+        14, 15,
+        17, 18, 19, 20, 21,
+        23, 24,
+        26, 27
+    ]
+
+    for day in drink_water_days:
         completion_data.append(
             (
                 habits["Drink Water"].id,
@@ -109,11 +117,18 @@ def _build_completion_data(habits):
         )
 
     # Exercise:
-    # longest daily streak = 4 days
-    for day in [
+    # Data distributed across all four weeks with
+    # several broken and consecutive streaks.
+    exercise_days = [
         0, 1, 2,
-        4, 5, 6, 7
-    ]:
+        4, 5, 6, 7,
+        10, 11,
+        14, 15, 16,
+        20, 21, 22, 23,
+        26, 27
+    ]
+
+    for day in exercise_days:
         completion_data.append(
             (
                 habits["Exercise"].id,
@@ -122,8 +137,18 @@ def _build_completion_data(habits):
         )
 
     # Read 20 Minutes:
-    # longest daily streak = 8 days
-    for day in range(10, 18):
+    # Data covers the complete four-week period and
+    # contains a longer daily streak.
+    read_days = [
+        0, 1,
+        3, 4, 5, 6,
+        8, 9, 10, 11, 12, 13,
+        15, 16, 17, 18, 19, 20, 21,
+        23, 24, 25,
+        27
+    ]
+
+    for day in read_days:
         completion_data.append(
             (
                 habits["Read 20 Minutes"].id,
@@ -132,29 +157,36 @@ def _build_completion_data(habits):
         )
 
     # Call Family:
-    # four consecutive weekly periods
-    for week in range(4):
+    # One completion in each of four consecutive weeks.
+    call_family_days = [
+        0,
+        7,
+        14,
+        21
+    ]
+
+    for day in call_family_days:
         completion_data.append(
             (
                 habits["Call Family"].id,
-                start_date + timedelta(weeks=week)
+                start_date + timedelta(days=day)
             )
         )
 
-    # Pay Monthly Bills:
-    # example monthly data.
-    # Four consecutive months are used so that monthly
-    # streak calculation can also be demonstrated.
-    for month in [
-        datetime(2026, 8, 1, 18, 0),
-        datetime(2026, 9, 1, 18, 0),
-        datetime(2026, 10, 1, 18, 0),
-        datetime(2026, 11, 1, 18, 0),
-    ]:
+    # Clean Apartment:
+    # Four weeks of example data with one missed week
+    # to demonstrate a broken weekly streak.
+    clean_apartment_days = [
+        2,
+        16,
+        23
+    ]
+
+    for day in clean_apartment_days:
         completion_data.append(
             (
-                habits["Pay Monthly Bills"].id,
-                month
+                habits["Clean Apartment"].id,
+                start_date + timedelta(days=day)
             )
         )
 
